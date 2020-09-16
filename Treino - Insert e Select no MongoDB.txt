@@ -1,0 +1,94 @@
+//Inserindo novos dados usando MongoDB Playground
+//Seleciona-se o database à ser utilizado.
+use('Projetos')
+
+//Exemplo para inserir com insertOne
+db.filmes.insertOne({
+  "titulo":"Guerra nas estrelas",
+  "ano":1989,
+  "diretor":"George Lucas"
+  })
+
+use('Projetos')
+//Exemplo de insert com insertMany
+  db.filmes.insertMany([
+    {"titulo":"O exorcista", "ano":1988, "diretor":"Harry Poter"},
+    {"titulo": "007", "ano": 2001, "diretor":"Jeorge Michael", "genero":"Ação"}
+  ])
+
+//SELECT IN MonngoDB
+use('Projetos')
+//Select * from filmes
+db.filmes.find()
+
+use('Projetos')
+//sect * from filmes where ano = 2001
+db.filmes.find({"ano": 2001},{"_id":0, "diretor":1,"titulo":1})
+
+use('Projetos')
+//select titulo, diretor from filmes where diretor like '%harry%'
+db.filmes.find({"diretor":/harry/i},{"_id":0,"ano":0})
+
+//USANDO UM BANCO DE DADOS DIFERENTE, REALIZANDO TESTES NOS OPERADORES IMPORTANTES + 
+//NOTAÇÕES QUE FACILITAM A MANUTENÇÃO E LEITURA DA LINGUAGEM.
+
+use('projetos')
+db.clientes.find()
+
+//Clientes com o numero do sapato 42
+use('projetos')
+db.clientes.find({numeroCalcado: 42})
+
+//Clientes co o nome Gertrude
+use('projetos')
+db.clientes.find({"nome.primeiro": /gertrude/i})
+
+use('projetos')
+//Clientes que calçam do numero 36 ao 40
+db.clientes.find({numeroCalcado: {
+  //Maior ou igual // menor ou igual
+  $gte:36, $lte: 40
+  //para um maior que e um menor que
+  //$gt:35, $lt: 41
+}})
+// Encontrar com buscas unidas, mulheres que torcem para o ituano
+use('projetos')
+db.clientes.find( { $and:[
+  {sexo: {$eq: 'feminino'}},
+  {timeFutebol: {$eq: 'Ituano'}}
+]})
+
+//Buscar de forma unida, mulheres que não torcem para o ituano
+use('projetos')
+db.clientes.find( { $and:[
+  {sexo: {$eq: 'feminino'}},
+  {timeFutebol: {$ne: 'Ituano'}}
+]})
+
+//Clientes mulheres ou que torcem para o ituano
+use('projetos')
+db.clientes.find( { $or:[
+  {sexo: {$eq: 'feminino'}},
+  {timeFutebol: {$eq: 'Ituano'}}
+]})
+
+//Clientes com total de vendas maior que $gt 85000
+//maior ou igual $gte
+use('projetos')
+db.clientes.find( {totalVendas: {$gt: "85000"}})
+
+use('projetos')
+//Pessoas que moram em uma latitude maior ou igual a 48 e
+//tem o nome ou sobrenome de gertrude
+db.clientes.find({
+  $and: [
+    latitude: {$gte : "48"}
+  ]
+},
+{
+  $or : [
+    {"nome.primeiro":"Gertrude"},
+    {"nome.segundo":"Gertrude"}
+  ]
+}
+)
