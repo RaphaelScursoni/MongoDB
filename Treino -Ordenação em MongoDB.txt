@@ -1,0 +1,16 @@
+use('projetos')
+db.clientes.find({numeroCalcado:42}).sort({"nome.primeiro":1})
+
+//Para ordenar os dados que irão ser retornados pelo FIND
+//utiliza-se o SORT
+//Para retornar de (A-Z) : 1
+//Para retornar de (Z-A) : -1
+
+use('projetos')
+db.clientes.find({
+  sexo: {
+    $in: ["masculino","feminino"]
+        }
+},
+  {_id:0, foto:0} //Colunas que eu não quero retorno
+).sort({empresa:-1})
