@@ -1,0 +1,27 @@
+// Update no MongoDB
+
+//updateOne
+use('Projetos')
+db.filmes.updateOne({titulo:"007"},
+  {
+   $set:{ano: 1985, genero:"Ação"}
+  }
+)
+use('Projetos')
+db.filmes.insertOne({"titulo":"Guerra nas estrelas II", "diretor":"George Lucas"})
+
+//updateMany
+use('Projetos')
+db.filmes.updateMany({diretor:"George Lucas"},
+  {
+    $set:{blockbuster:true}
+  }
+)
+
+//Reesruturar o documento com ano 1988 da maneira que for descrito
+//replaceOne
+use('Projetos')
+db.filmes.replaceOne(
+  {ano: 1988}, //Filtro
+  {title: "The Exorcist", gender: "Terror"} // Mudança
+)
