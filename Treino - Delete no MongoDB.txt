@@ -1,0 +1,17 @@
+// Delete in MongoDB
+
+//deleteOne
+use('Projetos')
+db.filmes.deleteOne(
+  {"title":"The Exorcist"}
+)
+
+//DeleteMany
+use('Projetos')
+db.filmes.deleteMany(
+  {diretor: "George Lucas"}
+)
+
+//Apagar todos os registros da coleção!
+use('Projetos')
+db.filmes.deleteMany({}) //Utilizar um array vazio
